@@ -206,6 +206,7 @@ All comments must be added in a single `POST /repos/.../pulls/.../reviews` call 
 - Do NOT call the submit review endpoint (`POST /repos/.../pulls/.../reviews/.../events`)
 - Do NOT use `gh pr review --approve/--request-changes/--comment` as this submits immediately
 - Inform the user that the review is pending and they can go to the PR page to review comments and submit manually
+- Suggest a short review summary that the user can paste into the GitHub submission dialog when submitting the review (e.g. a concise overview of the key points raised)
 
 ## Output Formatting Rules
 
