@@ -127,7 +127,9 @@ The review evaluates changes against KubeVirt's established standards:
    - **General Design Pass**: Overall design and architecture
    - **Detailed Code Pass**: Line-by-line implementation review
    - **Standards Compliance Pass**: KubeVirt coding conventions
-2. For each issue found, note the file path and relevant diff context
+2. For each issue found, note the file path and the **actual source file line number**
+   - IMPORTANT: Derive line numbers from the diff hunk headers (e.g., `@@ -0,0 +1,462 @@` means the new file content starts at line 1). Count lines from the hunk header to locate the correct source line number
+   - Do NOT use the line numbers prepended by the Read tool when displaying the diff output - those are sequential line numbers within the diff text file itself and do not correspond to source file lines
 3. Categorize findings by severity
 
 ### Phase 6: Generate Review Report
@@ -203,6 +205,7 @@ All comments must be added in a single `POST /repos/.../pulls/.../reviews` call 
 2. Do NOT include an `event` field - omitting it creates the review in PENDING state by default
 3. For findings that span multiple lines, use `start_line` and `line` to create multi-line comments
 4. For general findings not tied to a specific line, add them as a single comment on a relevant file
+5. The `line` field must be the line number in the actual file (as shown in the diff hunk header `@@ ... +<start>,<count> @@`), NOT the line number from any intermediate output or persisted diff file. To verify correct line numbers, cross-reference against the diff hunk headers or use `gh api repos/<owner>/<repo>/contents/<path>?ref=<head-sha>` to fetch the file and confirm.
 
 #### Important: Do NOT Submit the Review
 - The review MUST remain in PENDING state after adding comments
